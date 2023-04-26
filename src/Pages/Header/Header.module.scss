@@ -1,0 +1,35 @@
+.container {
+    background-color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.container_content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px;
+    color: #152A94;
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+}
+
+.navLinks_item {
+    margin-right: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.navLinks_item:last-child {
+    margin-right: 0;
+}
