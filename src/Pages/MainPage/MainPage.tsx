@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement } from '../../Store/CounterSlice';
+import { increment, decrement } from '../../Store/CounterStore';
 import { RootState } from '../../Store/CounterStore';
 import styles from './MainPage.module.scss';
 import ModalWindow from '../../Components/ModalWindow/ModalWindow';
@@ -15,7 +15,7 @@ const companyList: ModalContent = {
 }
 
 const MainPage = () => {
-    const count = useSelector((state: RootState) => state.counter.value);
+    const count = useSelector((state: RootState) => state.counter);
     const dispatch = useDispatch();
 
     return (
@@ -29,8 +29,8 @@ const MainPage = () => {
             </div>
             <div>
                 <h1>{count}</h1>
-                <button onClick={() => dispatch(increment())}>Increment</button>
                 <button onClick={() => dispatch(decrement())}>Decrement</button>
+                <button onClick={() => dispatch(increment())}>Increment</button>
             </div>
         </main>
     );
