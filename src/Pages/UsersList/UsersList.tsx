@@ -1,36 +1,28 @@
 import Table from "../../Components/Table/Table";
 import styles from "./UsersList.module.scss";
-
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  age: number;
-  email: string;
-}
-
-const userList: User[] = [
-  { id: 1, firstName: "Иван", lastName: "Иванов", age: 25, email: "ivanov@gmail.ru" },
-  { id: 2, firstName: "Анна", lastName: "Петрова", age: 32, email: "petrova@gmail.ru" },
-  { id: 3, firstName: "Петр", lastName: "Сидоров", age: 43, email: "sidorov@gmail.ru" },
-  { id: 4, firstName: "Иван", lastName: "Сидоров", age: 35, email: "i.sidorov@gmail.ru" },
-];
+import api from '../../Api/Instance';
+import { useState, useEffect } from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const UsersList = () => {
-
-  const userListProps = userList.map((user) => {
-    return {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      age: user.age,
-      email: user.email
-    }
-  });
+  const [userList, setUserList] = useState([]);
+  const { user } = useAuth0();
+  console.log(user);
+  
+  useEffect(() => {
+    api.getUsers()
+      .then((response) => {
+        setUserList(response.data.result.users);
+        console.log(response.data.result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <main className={styles.container}>
-      <Table data={userListProps} />
+      <Table data={userList} />
     </main>
   );
 };
