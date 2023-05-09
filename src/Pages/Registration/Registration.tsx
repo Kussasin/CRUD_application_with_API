@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../Api/Instance';
+import validateForm from '../../Utils/RegFormValidation';
+import { Errors, FormValues } from '../../Types/Types';
 
 const Registration = () => {
-  const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState<FormValues>({
     user_firstname: '',
     user_lastname: '',
     user_email: '',
@@ -14,7 +16,7 @@ const Registration = () => {
     user_password_repeat: '',
   });
 
-  const [formErrors, setFormErrors] = useState({
+  const [formErrors, setFormErrors] = useState<Errors>({
     user_firstname: '',
     user_lastname: '',
     user_email: '',
@@ -30,9 +32,10 @@ const Registration = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const isFormValid = validateForm();
+    const errors = validateForm(formValues);
+    setFormErrors(errors);
 
-    if (isFormValid) {
+    if (Object.keys(errors).length === 0) {
       try {
         const response = await api.createUser(formValues);
         console.log(response);
@@ -40,52 +43,12 @@ const Registration = () => {
         setTimeout(() => {
           window.location.href = "/authorization";
         }, 1000);
+
       } catch (error) {
         console.error(error);
         toast.error('Failed to create user');
       }
     }
-  };
-
-  const validateForm = () => {
-    let errors: any = {};
-
-    if (!formValues.user_firstname) {
-      errors.user_firstname = 'Name is required';
-    } else if (!/^[A-Za-zА-Яа-яЁё]+$/.test(formValues.user_firstname)) {
-      errors.user_firstname = 'Name should contain only letters';
-    }
-
-    if (!formValues.user_lastname) {
-      errors.user_lastname = 'Surname is required';
-    } else if (!/^[A-Za-zА-Яа-яЁё]+$/.test(formValues.user_lastname)) {
-      errors.user_lastname = 'Surname should contain only letters';
-    }
-
-    if (!formValues.user_email) {
-      errors.user_email = 'Email is required';
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formValues.user_email)
-    ) {
-      errors.user_email = 'Invalid email address';
-    }
-
-    if (!formValues.user_password) {
-      errors.user_password = 'Password is required';
-    } else if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(formValues.user_password)
-    ) {
-      errors.user_password = 'Password should contain at least 8 characters, including at least one lowercase letter, one uppercase letter, one number, and one special character (!@#$%^&*)';
-    }
-
-    if (!formValues.user_password_repeat) {
-      errors.user_password_repeat = 'Repeat password';
-    } else if (formValues.user_password_repeat != formValues.user_password) {
-      errors.user_password_repeat = 'Password mismatch';
-    }
-
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
   };
 
   return (
@@ -124,7 +87,8 @@ const Registration = () => {
             onChange={handleInputChange}
           />
           {
-            formErrors.user_email && <span className={styles.error}>{formErrors.user_email}</span>
+            formErrors.user_email && <span
+              className={styles.error}>{formErrors.user_email}</span>
           }
         </div>
         <div className={styles.formGroup}>

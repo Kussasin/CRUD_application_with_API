@@ -1,13 +1,11 @@
 import React from "react";
 import styles from "./Table.module.scss";
-import { useAuth0 } from "@auth0/auth0-react";
 
 interface TableProps {
     data: Record<string, string | number>[];
 }
 
 const Table: React.FC<TableProps> = ({ data }) => {
-    const { isLoading } = useAuth0();
 
     if (data.length === 0) {
         return <div>No data available</div>;
@@ -15,9 +13,6 @@ const Table: React.FC<TableProps> = ({ data }) => {
 
     const headers = Object.keys(data[0]);
 
-    if (isLoading) {
-        return <div>Loading ...</div>;
-    }
     return (
         <div className={styles.container}>
             <div className={styles.row}>

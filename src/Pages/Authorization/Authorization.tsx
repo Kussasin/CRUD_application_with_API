@@ -5,26 +5,24 @@ import styles from './Authorization.module.scss';
 import api from '../../Api/Instance';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-interface FormValues {
-  user_email: string;
-  user_password: string;
-}
-
-interface FormErrors {
-  user_email?: string;
-  user_password?: string;
-}
+import validateForm from '../../Utils/AuthFormValidation';
+import { AuthFormValues, FormErrors, Token, UserProfile } from '../../Types/Types';
+import { setToken, setUser } from '../../Store/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Authorization = () => {
 
-  const [formValues, setFormValues] = useState<FormValues>({
+  const [formValues, setFormValues] = useState<AuthFormValues>({
     user_email: '',
     user_password: '',
   });
 
-  const [formErrors, setFormErrors] = useState<FormErrors>({});
+  const [formErrors, setFormErrors] = useState<FormErrors>({
+    user_email: '',
+    user_password: '',
+  });
   const { loginWithPopup, getAccessTokenSilently } = useAuth0();
+  const dispatch = useDispatch();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -34,54 +32,55 @@ const Authorization = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const isFormValid = validateForm();
+    const errors = validateForm(formValues);
+    setFormErrors(errors);
+    console.log(errors);
+    console.log(formValues);
 
-    if (isFormValid) {
+    if (Object.keys(errors).length === 0) {
       try {
         const response = await api.loginUser(formValues);
-        localStorage.setItem('token', response.data.result.access_token);
-        api.updateAuthorizationHeader(response.data.result.access_token);
+        const accessToken: Token = {
+          access_token: response.data.result.access_token,
+        };
 
+        dispatch(setToken(accessToken));
         const profileResponse = await api.getProfile();
-        localStorage.setItem('me', JSON.stringify(profileResponse.data.result));
-        
-        window.location.href = '/';
+
+        const userMe: UserProfile = {
+          ...profileResponse.data.result
+        };
+
+        dispatch(setUser(userMe));
+
       } catch (error) {
         console.error(error);
         toast.error('Incorrect username or password');
       }
+    } else {
+      toast.error('Please fix the errors in the form');
     }
   };
 
-  const validateForm = () => {
-    let errors: FormErrors = {};
-
-    if (!formValues.user_email) {
-      errors.user_email = 'Email is required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formValues.user_email)) {
-      errors.user_email = 'Invalid email address';
-    }
-
-    if (!formValues.user_password) {
-      errors.user_password = 'Password is required';
-    } else if (formValues.user_password.length < 6) {
-      errors.user_password = 'Password should contain at least 6 characters';
-    }
-
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
 
   const handleAuth0Click = async () => {
     try {
       await loginWithPopup();
       const token = await getAccessTokenSilently();
-      localStorage.setItem('token', token);
-      api.updateAuthorizationHeader(token);
+
+      const accessToken: Token = {
+        access_token: token,
+      };
+
+      dispatch(setToken(accessToken));
 
       const profileResponse = await api.getProfile();
-      localStorage.setItem('me', JSON.stringify(profileResponse.data.result));
-      window.location.href = '/';
+
+      const userMe: UserProfile = {
+        ...profileResponse.data.result
+      };
+
+      dispatch(setUser(userMe));
 
     } catch (error) {
       console.error(error);
@@ -127,7 +126,7 @@ const Authorization = () => {
         Auth0
       </button>
       <div className={styles.signupLink}>
-        Don't have an account? <Link to="/signup">Sign up</Link>
+        Don't have an account? <Link to="/registration">Sign up</Link>
       </div>
       <ToastContainer />
     </main>

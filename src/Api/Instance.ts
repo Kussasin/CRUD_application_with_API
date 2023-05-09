@@ -1,39 +1,24 @@
+import { User } from '@auth0/auth0-react';
 import axios, { AxiosInstance } from 'axios';
+import { LoginRequest, LoginResponse } from '../Types/Types';
+import { RootState, store } from '../Store/CounterStore';
 
 const instance: AxiosInstance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
-});
-
-instance.interceptors.request.use((config) => {
-    const token = getToken('token');
+  });
+  
+  instance.interceptors.request.use((config) => {
+    const token = getToken();
     if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
-});
+  });
 
-interface User {
-    user_firstname: string;
-    user_lastname: string;
-    user_email: string;
-    user_password: string;
-    user_password_repeat: string;
-}
-
-interface LoginRequest {
-    user_email: string;
-    user_password: string;
-}
-
-interface LoginResponse {
-    result: {
-        access_token: string,
-        token_type: string,
-    }
-}
-const getToken = (tokenKey: string) => {
-    return localStorage.getItem(tokenKey);
-};
+  const getToken = () => {
+    const state: RootState = store.getState();   
+     return state.token.token?.access_token;
+  };
 
 const updateAuthorizationHeader = (token: string) => {
     instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -55,8 +40,10 @@ const createUser = (user: User) => {
     return instance.post('/user/', user);
 };
 
-const loginUser = (loginRequest: LoginRequest) => {
-    return instance.post<LoginResponse>('/auth/login/', loginRequest);
+const loginUser = async (loginRequest: LoginRequest) => {
+    const response = await instance.post<LoginResponse>('/auth/login/', loginRequest);
+    updateAuthorizationHeader(response.data.result.access_token);
+    return response;
 };
 
 const getProfile = () => {
@@ -70,7 +57,7 @@ const api = {
     createUser,
     loginUser,
     getProfile,
-    updateAuthorizationHeader,
 };
 
 export default api;
+

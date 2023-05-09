@@ -1,27 +1,14 @@
-import { createStore } from "redux";
-
-interface IState {
-    counter: number;
-}
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import tokenReducer from './tokenReducer';
+import thunk from 'redux-thunk';
+import { IIncrementAction, IDecrementAction, ActionTypes, IState } from '../Types/Types';
+import userReducer from './userReducer';
 
 const initialState = { counter: 0 };
 
-enum ActionTypes {
-    INCREMENT = "INCREMENT",
-    DECREMENT = "DECREMENT",
-}
-
-interface IIncrementAction {
-    type: ActionTypes.INCREMENT;
-}
-
-interface IDecrementAction {
-    type: ActionTypes.DECREMENT;
-}
-
 type Action = IIncrementAction | IDecrementAction;
 
-function reducer(state: IState = initialState, action: Action): IState {
+function counterReducer(state: IState = initialState, action: Action): IState {
     switch (action.type) {
         case ActionTypes.INCREMENT:
             return { ...state, counter: state.counter + 1 };
@@ -32,10 +19,17 @@ function reducer(state: IState = initialState, action: Action): IState {
     }
 }
 
-const store = createStore(reducer);
+const rootReducer = combineReducers({
+    counter: counterReducer,
+    token: tokenReducer,
+    user: userReducer,
+});
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const increment = () => ({ type: ActionTypes.INCREMENT });
 const decrement = () => ({ type: ActionTypes.DECREMENT });
 
 export { increment, decrement, store };
+
 export type RootState = ReturnType<typeof store.getState>;
