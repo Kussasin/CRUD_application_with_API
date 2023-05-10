@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../Api/Instance';
-import validateForm from '../../Utils/RegFormValidation';
+import validateForm from '../../Utils/FormValidation';
 import { Errors, FormValues } from '../../Types/Types';
 
 const Registration = () => {

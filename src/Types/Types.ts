@@ -87,3 +87,6 @@ export interface TokenState {
 export interface UserState {
     user: UserProfile | null;
 }
+export interface TableProps {
+    data: Record<string, string | number>[];
+}

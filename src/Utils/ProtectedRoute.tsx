@@ -1,11 +1,12 @@
 import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Layout from '../Components/Layout/Layout';
-import { RootState, store } from '../Store/CounterStore';
+import { RootState } from '../Store/CounterStore';
 
 const PrivateRoute = () => {
-  const state: RootState = store.getState();
-  const token = state.token.token?.access_token;
+  const token = useSelector((state: RootState) => state.user.user);
 
   return token ? <Layout /> : <Navigate to="/authorization" />;
-}
+};
+
 export default PrivateRoute;

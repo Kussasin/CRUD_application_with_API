@@ -1,49 +1,39 @@
 import React from "react";
 import styles from "./Table.module.scss";
-
-interface TableProps {
-    data: Record<string, string | number>[];
-}
+import { TableProps } from "../../Types/Types";
 
 const Table: React.FC<TableProps> = ({ data }) => {
-
-    if (data.length === 0) {
+    if (!data.length) {
         return <div>No data available</div>;
     }
 
     const headers = Object.keys(data[0]);
 
+    const renderCard = (item: Record<string, string | number>, index: number) => {
+        const card = headers.filter(element => item[element] && element !== "is_visible").map(element => {
+            const isAvatar = element.includes("_avatar");
+            const value = item[element].toString();
+            return (
+                <div key={element} className={isAvatar ? styles.cardImage : styles.cardData}>
+                    {isAvatar
+                        ? <img src={value} alt="Avatar" />
+                        : (
+                            <>
+                                <div className={styles.cardLabel}>{element}</div>
+                                <div className={styles.cardValue}>{value}</div>
+                            </>
+                        )
+                    }
+                </div>
+            )
+        });
+        return <div key={index} className={styles.card}>{card}</div>
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.row}>
-                {data.map((item, index) => (
-                    <div key={index} className={styles.card}>
-                        {headers.map((header) => {
-                            if (!item[header] || header === "is_visible") {
-                                return null;
-                            }
-
-                            const isAvatar = header.includes("_avatar");
-                            const value = item[header].toString();
-
-                            return (
-                                <div
-                                    key={header}
-                                    className={isAvatar ? styles.cardImage : styles.cardData}
-                                >
-                                    {isAvatar ? (
-                                        <img src={value} alt="Avatar" />
-                                    ) : (
-                                        <>
-                                            <div className={styles.cardLabel}>{header}</div>
-                                            <div className={styles.cardValue}>{value}</div>
-                                        </>
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
-                ))}
+                {data.map(renderCard)}
             </div>
         </div>
     );

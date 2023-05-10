@@ -5,16 +5,19 @@ import styles from './Authorization.module.scss';
 import api from '../../Api/Instance';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import validateForm from '../../Utils/AuthFormValidation';
-import { AuthFormValues, FormErrors, Token, UserProfile } from '../../Types/Types';
+import validateForm from '../../Utils/FormValidation';
+import { FormValues, FormErrors, Token, UserProfile } from '../../Types/Types';
 import { setToken, setUser } from '../../Store/thunks';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const Authorization = () => {
 
-  const [formValues, setFormValues] = useState<AuthFormValues>({
+  const [formValues, setFormValues] = useState<FormValues>({
+    user_firstname: '',
+    user_lastname: '',
     user_email: '',
     user_password: '',
+    user_password_repeat: '',
   });
 
   const [formErrors, setFormErrors] = useState<FormErrors>({
@@ -32,7 +35,7 @@ const Authorization = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const errors = validateForm(formValues);
+    const errors = validateForm(formValues, ['user_email', 'user_password']);
     setFormErrors(errors);
     console.log(errors);
     console.log(formValues);
@@ -57,11 +60,8 @@ const Authorization = () => {
         console.error(error);
         toast.error('Incorrect username or password');
       }
-    } else {
-      toast.error('Please fix the errors in the form');
     }
   };
-
 
   const handleAuth0Click = async () => {
     try {
