@@ -12,6 +12,7 @@ import UserProfile from './Pages/UserProfile/UserProfile';
 import UsersList from './Pages/UsersList/UsersList';
 import { Provider } from 'react-redux';
 import { store } from './Store/CounterStore';
+import PrivateRoute from './Utils/ProtectedRoute';
 
 const App = () => {
   return (
@@ -19,15 +20,17 @@ const App = () => {
       <Provider store={store}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<MainPage />} />
+            <Route path='/' element={<PrivateRoute />}>
               <Route path="/about" element={<About />} />
-              <Route path="/authorization" element={<Authorization />} />
               <Route path="/companies" element={<CompaniesList />} />
               <Route path="/companies/:id" element={<CompanyProfile />} />
-              <Route path="/registration" element={<Registration />} />
               <Route path="/users" element={<UsersList />} />
               <Route path="/users/:id" element={<UserProfile />} />
+            </Route>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<MainPage />} />
+              <Route path="/authorization" element={<Authorization />} />
+              <Route path="/registration" element={<Registration />} />
               <Route path="*" element={<NoPage />} />
             </Route>
           </Routes>

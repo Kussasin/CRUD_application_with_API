@@ -4,11 +4,7 @@ import { RootState } from '../../Store/CounterStore';
 import styles from './MainPage.module.scss';
 import ModalWindow from '../../Components/ModalWindow/ModalWindow';
 import api from '../../Api/Instance';
-
-interface ModalContent {
-    header: string;
-    content: string;
-}
+import { ModalContent } from '../../Types/Types';
 
 const companyList: ModalContent = {
     header: "I'm a modal dialog",
@@ -23,7 +19,7 @@ api.checkStatus().then((response) => {
 });
 
 const MainPage = () => {
-    const count = useSelector((state: RootState) => state.counter);
+    const { counter } = useSelector((state: RootState) => state.counter);
     const dispatch = useDispatch();
 
     return (
@@ -36,12 +32,13 @@ const MainPage = () => {
                 />
             </div>
             <div>
-                <h1>{count}</h1>
+                <h1>{counter}</h1>
                 <button onClick={() => dispatch(decrement())}>Decrement</button>
                 <button onClick={() => dispatch(increment())}>Increment</button>
             </div>
         </main>
     );
 }
+
 
 export default MainPage;
