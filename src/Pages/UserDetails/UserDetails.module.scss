@@ -1,0 +1,231 @@
+.userProfile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 10px;
+}
+
+.avatar {
+  max-width: 100%;
+  max-height: 100px;
+  object-fit: contain;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.name {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.email {
+  margin-top: 10px;
+  color: #888;
+  font-size: 18px;
+  text-align: center;
+}
+
+.status {
+  margin-top: 10px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.city {
+  margin-top: 10px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.label {
+  font-weight: normal;
+  color: #000;
+}
+
+.phone {
+  margin-top: 10px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+}
+
+.options {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  background-color: #000;
+  border-radius: 50%;
+  margin: 2px;
+  opacity: 0.6;
+}
+
+.optionsList {
+  position: absolute;
+  top: 30px; 
+  right: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  width: 120px;
+}
+
+.optionsList li {
+  padding: 5px;
+}
+
+.edit,
+.changePassword {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.edit:hover,
+.changePassword:hover {
+  background-color: #eee;
+}
+.delete {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.delete:hover {
+  background-color: #d60000;
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.changeAvatar {
+  width: 100%;
+  padding: 5px;
+  background-color: #598ce4;
+  color: #fff;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.changeAvatar:hover {
+  background-color: #3366cc;
+}
+
+.changeAvatar:focus {
+  outline: none;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.formField label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.formField input {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.formActions {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.saveButton,
+.cancelButton {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.saveButton {
+  background-color: #00a000;
+  color: #fff;
+  margin-right: 10px;
+  padding: 10px 20px;
+}
+
+.saveButton:hover {
+  background-color: #008800;
+}
+
+.cancelButton {
+  background-color: #ff0000;
+  padding: 10px 20px;
+  color: #fff;
+}
+
+.cancelButton:hover {
+  background-color: #d60000;
+}

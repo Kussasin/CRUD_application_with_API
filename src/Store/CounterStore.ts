@@ -3,6 +3,9 @@ import tokenReducer from './tokenReducer';
 import thunk from 'redux-thunk';
 import { IIncrementAction, IDecrementAction, ActionTypes, IState } from '../Types/Types';
 import userReducer from './userReducer';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import userListReducer from './usersListReducer';
 
 const initialState = { counter: 0 };
 
@@ -23,13 +26,21 @@ const rootReducer = combineReducers({
     counter: counterReducer,
     token: tokenReducer,
     user: userReducer,
+    users: userListReducer
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const persistConfig = {
+    key: 'root',
+    storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = createStore(persistedReducer, applyMiddleware(thunk));
+const persistor = persistStore(store);
 
 const increment = () => ({ type: ActionTypes.INCREMENT });
 const decrement = () => ({ type: ActionTypes.DECREMENT });
 
-export { increment, decrement, store };
-
+export { increment, decrement, store, persistor };
 export type RootState = ReturnType<typeof store.getState>;

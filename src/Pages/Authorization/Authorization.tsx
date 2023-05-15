@@ -81,6 +81,7 @@ const Authorization = () => {
       };
 
       dispatch(setUser(userMe));
+      window.location.href = '/';
 
     } catch (error) {
       console.error(error);

@@ -2,7 +2,7 @@ import { FormValues, Errors } from "../Types/Types";
 
 const nameRegex = /^[A-Za-zА-Яа-яЁё]+$/;
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
 
 const validateForm = (formValues: FormValues, fieldsToValidate?: string[]): Errors => {
     const errors: Errors = {};

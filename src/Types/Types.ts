@@ -20,6 +20,24 @@ export interface User {
     user_password_repeat: string;
 }
 
+export interface UserListItem {
+    user_id: number;
+    user_email: string;
+    user_firstname: string;
+    user_lastname: string;
+    user_avatar: string | null;
+}
+
+export interface UserList {
+    users: UserListItem[];
+    user_by_id: UserProfile | null;
+  }
+  
+
+export interface UserById {
+    user_by_id: UserListItem[];
+}
+
 export interface LoginRequest {
     user_email: string;
     user_password: string;
@@ -31,6 +49,7 @@ export interface LoginResponse {
         token_type: string,
     }
 }
+
 export interface Errors {
     user_firstname?: string;
     user_lastname?: string;
@@ -38,6 +57,7 @@ export interface Errors {
     user_password?: string;
     user_password_repeat?: string;
 }
+
 export type FormValues = {
     user_firstname: string,
     user_lastname: string,
@@ -45,6 +65,7 @@ export type FormValues = {
     user_password: string,
     user_password_repeat: string,
 };
+
 export interface AuthFormValues {
     user_email: string;
     user_password: string;
@@ -87,6 +108,8 @@ export interface TokenState {
 export interface UserState {
     user: UserProfile | null;
 }
+
 export interface TableProps {
     data: Record<string, string | number>[];
-}
+    table_type: "user" | "company";
+  }
