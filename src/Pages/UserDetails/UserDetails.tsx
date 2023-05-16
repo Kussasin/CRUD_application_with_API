@@ -103,22 +103,14 @@ const UserDetail = () => {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    input.onchange = (event: Event) =>
-      handleAvatarChange(event);
+    input.onchange = handleAvatarChange;
     input.click();
   };
   
   const handleAvatarChange = (event: Event): void => {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event: ProgressEvent<FileReader>) => {
-        const result = event.target?.result;
-        if (typeof result === 'string') {
-          setAvatarFile(file);
-        }
-      };
-      reader.readAsDataURL(file);
+      setAvatarFile(file);
     }
   };
 
@@ -179,31 +171,18 @@ const UserDetail = () => {
   const handleSaveDataClick = () => {
     if (id) {
       if (avatarFile) {
-        const reader = new FileReader();
-  
-        reader.onloadend = () => {
-          const data: string = reader.result as string;
-  
-          const base64Data = data.split(',')[1]; // Отсекаем префикс "data:image/jpeg;base64,"
-  
-          // Convert base64Data back to a File object
-          const file = base64ToBlob(base64Data, 'image/jpeg');
-  
-          api
-            .updateUserAvatar(id, file)
-            .then(() => {
-              toast.success('Avatar successfully changed');
-              setTimeout(() => {
-                window.location.href = '/users';
-              }, 1000);
-            })
-            .catch((error) => {
-              toast.error('Error changing avatar');
-              console.log('Error changing avatar:', error);
-            });
-        };
-  
-        reader.readAsDataURL(avatarFile);
+        api
+          .updateUserAvatar(id, avatarFile)
+          .then(() => {
+            toast.success('Avatar successfully changed');
+            setTimeout(() => {
+              window.location.href = '/users';
+            }, 1000);
+          })
+          .catch((error) => {
+            toast.error('Error changing avatar');
+            console.log('Error changing avatar:', error);
+          });
       } else {
         const updatedData = {
           user_firstname: firstName,
@@ -228,28 +207,6 @@ const UserDetail = () => {
       }
     }
   };
-  
-  function base64ToBlob(base64Data: string, contentType: string): File {
-    const byteCharacters = atob(base64Data);
-    const byteArrays = [];
-  
-    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-      const slice = byteCharacters.slice(offset, offset + 512);
-  
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-  
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-  
-    const blob = new Blob(byteArrays, { type: contentType });
-    const file = new File([blob], 'avatar.jpg', { type: contentType });
-  
-    return file;
-  }
   
   if (loading) {
     return <div className={styles.message}>Loading...</div>;
