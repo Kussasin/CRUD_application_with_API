@@ -1,6 +1,6 @@
 import { User } from '@auth0/auth0-react';
 import axios, { AxiosInstance } from 'axios';
-import { LoginRequest, LoginResponse } from '../Types/Types';
+import { LoginRequest, LoginResponse, UpdatePasswordData, UpdateUserInfoData } from '../Types/Types';
 import { RootState, store } from '../Store/CounterStore';
 
 const instance: AxiosInstance = axios.create({
@@ -52,25 +52,24 @@ const deleteUser = (id: string) => {
     return instance.delete(`/user/${id}/`);
 };
 
-const updateUserInfo = (id: string, data: any) => {
+const updateUserInfo = (id: string, data: UpdateUserInfoData) => {
     return instance.put(`/user/${id}/update_info/`, data);
 };
 
 const updateUserAvatar = (id: string, data: File) => {
     const formData = new FormData();
     formData.append('file', data);
-  
-    return instance.put(`/user/${id}/update_avatar/`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-  };
-  
 
-const updateUserPassword = (id: string, data: any) => {
+    return instance.put(`/user/${id}/update_avatar/`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+};
+
+const updateUserPassword = (id: string, data: UpdatePasswordData) => {
     return instance.put(`/user/${id}/update_password/`, data);
-  };
+};
 
 const loginUser = async (loginRequest: LoginRequest) => {
     const response = await instance.post<LoginResponse>('/auth/login/', loginRequest);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Authorization.module.scss';
 import api from '../../Api/Instance';
 import { ToastContainer, toast } from 'react-toastify';
@@ -26,6 +26,7 @@ const Authorization = () => {
   });
   const { loginWithPopup, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -81,7 +82,7 @@ const Authorization = () => {
       };
 
       dispatch(setUser(userMe));
-      window.location.href = '/';
+      navigate('/');
 
     } catch (error) {
       console.error(error);
