@@ -8,6 +8,7 @@ import { RootState, persistor } from "../../Store/CounterStore";
 const Header = () => {
     const isAuth = useSelector((state: RootState) => state.user.user !== null);
     const userEmail = useSelector((state: RootState) => state.user.user?.user_email);
+    const MyId = useSelector((state: RootState) => state.user.user?.user_id);
     const users = useSelector((state: RootState) => state);
     const { logout } = useAuth0();
     const dispatch = useDispatch();
@@ -29,7 +30,9 @@ const Header = () => {
                 <div className={styles.navLinks}>
                     {isAuth ? (
                         <div className={styles.userDetails}>
-                            <span>{userEmail}</span>
+                            <Link className={styles.navLinks_item} to={`/user/${MyId}`}>
+                                {userEmail}
+                            </Link>
                             <Link className={styles.navLinks_item} to="/">
                                 Home
                             </Link>

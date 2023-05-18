@@ -24,6 +24,7 @@ const Authorization = () => {
     user_email: '',
     user_password: '',
   });
+
   const { loginWithPopup, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ const Authorization = () => {
         };
 
         dispatch(setUser(userMe));
+        navigate('/');
 
       } catch (error) {
         console.error(error);

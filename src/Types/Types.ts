@@ -28,13 +28,10 @@ export interface UserListItem {
     user_avatar: string | null;
 }
 
-
-
 export interface UserList {
     users: UserListItem[];
     user_by_id: UserProfile | null;
 }
-
 
 export interface UserById {
     user_by_id: UserListItem[];
@@ -181,4 +178,9 @@ export type ChangePasswordProps = {
     handleConfirmPasswordChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleSavePasswordClick: () => void;
     handleCancelClick: () => void;
+};
+
+export type CardProps = {
+    user: UserProfile;
+    anonimus: string;
 };

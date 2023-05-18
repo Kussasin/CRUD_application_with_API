@@ -1,6 +1,5 @@
-import { User } from '@auth0/auth0-react';
 import axios, { AxiosInstance } from 'axios';
-import { LoginRequest, LoginResponse, UpdatePasswordData, UpdateUserInfoData } from '../Types/Types';
+import { LoginRequest, LoginResponse, UpdatePasswordData, UpdateUserInfoData, User } from '../Types/Types';
 import { RootState, store } from '../Store/CounterStore';
 
 const instance: AxiosInstance = axios.create({
