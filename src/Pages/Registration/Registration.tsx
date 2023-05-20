@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './Registration.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../Api/Instance';
@@ -23,6 +23,7 @@ const Registration = () => {
     user_password: '',
     user_password_repeat: '',
   });
+  const navigate = useNavigate();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -41,7 +42,7 @@ const Registration = () => {
         console.log(response);
         toast.success('User created successfully');
         setTimeout(() => {
-          window.location.href = "/authorization";
+          navigate("/authorization");
         }, 1000);
 
       } catch (error) {

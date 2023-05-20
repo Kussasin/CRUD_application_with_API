@@ -19,7 +19,7 @@ const CompaniesList = () => {
 
   return (
     <main className={styles.container}>
-      <Table data={companyList} />
+      <Table data={companyList} table_type="company" />
     </main>
   );
 };

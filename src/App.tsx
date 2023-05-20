@@ -8,7 +8,7 @@ import CompaniesList from './Pages/CompaniesList/CompaniesList';
 import CompanyProfile from './Pages/CompanyProfile/CompanyProfile';
 import NoPage from './Pages/NoPage/NoPage';
 import Registration from './Pages/Registration/Registration';
-import UserProfile from './Pages/UserProfile/UserProfile';
+import UserDetails from './Pages/UserDetails/UserDetails';
 import UsersList from './Pages/UsersList/UsersList';
 import { Provider } from 'react-redux';
 import { store } from './Store/CounterStore';
@@ -23,9 +23,9 @@ const App = () => {
             <Route path='/' element={<PrivateRoute />}>
               <Route path="/about" element={<About />} />
               <Route path="/companies" element={<CompaniesList />} />
-              <Route path="/companies/:id" element={<CompanyProfile />} />
+              <Route path="/company/:id" element={<CompanyProfile />} />
               <Route path="/users" element={<UsersList />} />
-              <Route path="/users/:id" element={<UserProfile />} />
+              <Route path="/user/:id" element={<UserDetails />} />
             </Route>
             <Route path="/" element={<Layout />}>
               <Route index element={<MainPage />} />
