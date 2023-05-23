@@ -1,19 +1,14 @@
-import { CardProps, ChangePasswordProps, DropdownMenuProps, EditUserFormProps } from '../../Types/Types';
+import { CardProps, DropdownMenuProps, EditCompanyFormProps } from '../../Types/Types';
 import styles from '../../Pages/Users/UserDetails/UserDetails.module.scss';
 
 const DropdownMenu = (props: DropdownMenuProps) => {
-    const { handleEditClick, handleChangePasswordClick, handleDeleteClick } = props;
+    const { handleEditClick, handleDeleteClick } = props;
 
     return (
         <ul className={styles.optionsList}>
             <li>
                 <button className={styles.edit} onClick={handleEditClick}>
                     Edit
-                </button>
-            </li>
-            <li>
-                <button className={styles.changePassword} onClick={handleChangePasswordClick}>
-                    Change password
                 </button>
             </li>
             <li>
@@ -25,22 +20,22 @@ const DropdownMenu = (props: DropdownMenuProps) => {
     );
 }
 
-const EditForm = (props: EditUserFormProps) => {
+const EditForm = (props: EditCompanyFormProps) => {
 
     const {
         avatarFile,
-        user,
-        firstName,
-        lastName,
-        status,
+        company,
+        name,
+        title,
+        description,
         city,
         phone,
         links,
         anonimus,
         handleAvatarClick,
-        handleFirstNameChange,
-        handleLastNameChange,
-        handleStatusChange,
+        handleNameChange,
+        handleTitleChange,
+        handleDescriptionChange,
         handleCityChange,
         handlePhoneChange,
         handleLinkChange,
@@ -53,8 +48,8 @@ const EditForm = (props: EditUserFormProps) => {
     return (
         <div className={styles.editForm}>
             <div className={styles.avatarContainer}>
-                <img className={styles.avatar} src={avatarFile ? URL.createObjectURL(avatarFile) : (user?.user_avatar || anonimus)}
-                    alt="User avatar" key={avatarFile?.name}
+                <img className={styles.avatar} src={avatarFile ? URL.createObjectURL(avatarFile) : (company?.company_avatar || anonimus)}
+                    alt="Company avatar" key={avatarFile?.name}
                 />
                 <button className={styles.changeAvatar} onClick={handleAvatarClick}>
                     Change Avatar
@@ -62,16 +57,12 @@ const EditForm = (props: EditUserFormProps) => {
             </div>
             <div className={styles.cardContent}>
                 <div className={styles.formField}>
-                    <label htmlFor="firstname">First Name:</label>
-                    <input type="text" defaultValue={firstName} onChange={handleFirstNameChange} />
+                    <label htmlFor="Name">Name:</label>
+                    <input type="text" defaultValue={name} onChange={handleNameChange} />
                 </div>
                 <div className={styles.formField}>
-                    <label htmlFor="lastname">Last Name:</label>
-                    <input type="text" id="lastname" defaultValue={lastName} onChange={handleLastNameChange} />
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="status">Status:</label>
-                    <input type="text" id="status" defaultValue={status} onChange={handleStatusChange} />
+                    <label htmlFor="Title">Title:</label>
+                    <input type="text" id="lastname" defaultValue={title} onChange={handleTitleChange} />
                 </div>
                 <div className={styles.formField}>
                     <label htmlFor="city">City:</label>
@@ -106,6 +97,10 @@ const EditForm = (props: EditUserFormProps) => {
                         Add Link
                     </button>
                 </div>
+                <div className={styles.formField}>
+                    <label htmlFor="description">Description:</label>
+                    <input type="text" id="description" defaultValue={description} onChange={handleDescriptionChange} />
+                </div>
                 <div className={styles.formActions}>
                     <button className={styles.saveButton} onClick={handleSaveDataClick}>
                         Save
@@ -119,73 +114,29 @@ const EditForm = (props: EditUserFormProps) => {
     );
 }
 
-const ChangePassword = (props: ChangePasswordProps) => {
-
-    const {
-        avatarFile,
-        newPassword,
-        confirmPassword,
-        anonimus,
-        handleNewPasswordChange,
-        handleConfirmPasswordChange,
-        handleSavePasswordClick,
-        handleCancelClick
-    } = props;
-
-    return (
-        <div className={styles.editForm}>
-            <div className={styles.avatarContainer}>
-                <img className={styles.avatar} src={avatarFile ? URL.createObjectURL(avatarFile) : (avatarFile || anonimus)} alt="User avatar" />
-            </div>
-            <div className={styles.cardContent}>
-                <div className={styles.formField}>
-                    <label htmlFor="newPassword">New Password:</label>
-                    <input type="password" id="newPassword" value={newPassword} onChange={handleNewPasswordChange} />
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="confirmPassword">Confirm Password:</label>
-                    <input type="password" id="confirmPassword" value={confirmPassword} onChange={handleConfirmPasswordChange} />
-                </div>
-                <div className={styles.formActions}>
-                    <button className={styles.saveButton} onClick={handleSavePasswordClick}>
-                        Save
-                    </button>
-                    <button className={styles.cancelButton} onClick={handleCancelClick}>
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-const Card = ({ user, anonimus }: CardProps) => {
+const Card = ({ company, anonimus }: CardProps) => {
     return (
         <div>
-            <img className={styles.avatar} src={user?.user_avatar || anonimus} alt="User avatar" />
+            <img className={styles.avatar} src={company?.company_avatar || anonimus} alt="Company avatar" />
             <div className={styles.cardContent}>
                 <div className={styles.name}>
-                    <span className={styles.label}>Name:</span> {user?.user_firstname} <br />
-                    <span className={styles.label}>Surname:</span> {user?.user_lastname}
+                    <span className={styles.label}>Name:</span> {company?.company_name} <br />
                 </div>
                 <div className={styles.email}>
-                    <span className={styles.label}>Email:</span> {user?.user_email}
-                </div>
-                <div className={styles.status}>
-                    <span className={styles.label}>Status:</span> {user?.user_status}
+                    <span className={styles.label}>Title:</span> {company?.company_title}
                 </div>
                 <div className={styles.city}>
-                    <span className={styles.label}>City:</span> {user?.user_city}
+                    <span className={styles.label}>City:</span> {company?.company_city}
                 </div>
                 <div className={styles.phone}>
-                    <span className={styles.label}>Phone number:</span> {user?.user_phone}
+                    <span className={styles.label}>Phone number:</span> {company?.company_phone}
                 </div>
-                <div className={styles.phone}>
-                    <span className={styles.label}>Is super user?:</span> {user?.is_superuser ? 'yes' : 'no'}
+                <div className={styles.status}>
+                    <span className={styles.label}>Descripnions:</span> {company?.company_description}
                 </div>
                 <div className={styles.links}>
                     <span className={styles.label}>Links:</span>
-                    {user?.user_links?.map((link, _index) => (
+                    {company?.company_links?.map((link, _index) => (
                         <a href={link} key={link}>
                             {link}
                         </a>
@@ -196,4 +147,4 @@ const Card = ({ user, anonimus }: CardProps) => {
     );
 }
 
-export { DropdownMenu, EditForm, ChangePassword, Card };
+export { DropdownMenu, EditForm, Card };

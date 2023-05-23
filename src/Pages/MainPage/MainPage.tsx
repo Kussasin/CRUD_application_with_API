@@ -2,14 +2,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { increment, decrement } from '../../Store/CounterStore';
 import { RootState } from '../../Store/CounterStore';
 import styles from './MainPage.module.scss';
-import ModalWindow from '../../Components/ModalWindow/ModalWindow';
 import api from '../../Api/Instance';
-import { ModalContent } from '../../Types/Types';
 
-const companyList: ModalContent = {
-    header: "I'm a modal dialog",
-    content: "Modal content goes here..."
-}
 
 api.checkStatus().then((response) => {
     const { status_code, detail, result } = response.data;
@@ -26,15 +20,11 @@ const MainPage = () => {
         <main className={styles.container}>
             <div className={styles.container_content}>
                 <p>Hello User</p>
-                <ModalWindow
-                    headerText={companyList.header}
-                    contentText={companyList.content}
-                />
-            </div>
-            <div>
-                <h1>{counter}</h1>
-                <button onClick={() => dispatch(decrement())}>Decrement</button>
-                <button onClick={() => dispatch(increment())}>Increment</button>
+                <div>
+                    <h1>{counter}</h1>
+                    <button onClick={() => dispatch(decrement())}>Decrement</button>
+                    <button onClick={() => dispatch(increment())}>Increment</button>
+                </div>
             </div>
         </main>
     );

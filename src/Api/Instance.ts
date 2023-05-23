@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { LoginRequest, LoginResponse, UpdatePasswordData, UpdateUserInfoData, User } from '../Types/Types';
+import { CreateCompanyRequest, LoginRequest, LoginResponse, UpdateCompanyInfo, UpdatePasswordData, UpdateUserInfoData, User } from '../Types/Types';
 import { RootState, store } from '../Store/CounterStore';
 
 const instance: AxiosInstance = axios.create({
@@ -40,11 +40,11 @@ const getCompanies = () => {
 };
 
 const getCompanyById = (id: string) => {
-    return instance.get(`/companies/${id}`);
+    return instance.get(`/company/${id}`);
 };
 
-const createUser = (user: User) => {
-    return instance.post('/user/', user);
+const createUser = async (user: User) => {
+    return await instance.post('/user/', user);
 };
 
 const deleteUser = (id: string) => {
@@ -76,6 +76,33 @@ const loginUser = async (loginRequest: LoginRequest) => {
     return response;
 };
 
+const createCompany = async (companyData: CreateCompanyRequest) => {
+    return await instance.post('/company/', companyData);
+}
+
+const deleteCompany = (id: string) => {
+    return instance.delete(`/company/${id}/`);
+};
+
+const updateCompanyAvatar = (id: string, data: File) => {
+    const formData = new FormData();
+    formData.append('file', data);
+
+    return instance.put(`/company/${id}/update_avatar/`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+};
+
+const updateCompanyInfo = (id: string, data: UpdateCompanyInfo) => {
+    return instance.put(`/company/${id}/update_info/`, data);
+};
+
+const updateCompanyVisible = (id: string, data: boolean) => {
+    return instance.put(`/company/${id}/update_visible/`, data);
+};
+
 const getProfile = () => {
     return instance.get('/auth/me/');
 };
@@ -92,7 +119,12 @@ const api = {
     deleteUser,
     updateUserInfo,
     updateUserAvatar,
-    updateUserPassword
+    updateUserPassword,
+    createCompany,
+    deleteCompany,
+    updateCompanyAvatar,
+    updateCompanyInfo,
+    updateCompanyVisible,
 };
 
 export default api;

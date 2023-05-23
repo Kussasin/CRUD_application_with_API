@@ -95,11 +95,6 @@ export interface IState {
     counter: number;
 }
 
-export interface ModalContent {
-    header: string;
-    content: string;
-}
-
 export interface TokenState {
     token: Token | null;
 }
@@ -141,11 +136,11 @@ export type UserData = {
 
 export type DropdownMenuProps = {
     handleEditClick: () => void;
-    handleChangePasswordClick: () => void;
+    handleChangePasswordClick?: () => void;
     handleDeleteClick: () => void;
 };
 
-export type EditFormProps = {
+export type EditUserFormProps = {
     avatarFile: File | null;
     user: UserProfile | null;
     firstName: string;
@@ -170,7 +165,6 @@ export type EditFormProps = {
 
 export type ChangePasswordProps = {
     avatarFile: File | null;
-    user: UserProfile | null;
     newPassword: string;
     confirmPassword: string;
     anonimus: string;
@@ -181,6 +175,85 @@ export type ChangePasswordProps = {
 };
 
 export type CardProps = {
-    user: UserProfile;
+    user?: UserProfile;
+    company?: Company;
     anonimus: string;
+};
+
+export interface CreateCompanyRequest {
+    company_name: string;
+    is_visible: boolean;
+}
+
+export interface UpdateCompanyInfo {
+    company_name: string;
+    company_title: string;
+    company_description: string;
+    company_city: string;
+    company_phone: string;
+    company_links: string[];
+}
+
+export interface CompanyInfo {
+    company_name: string;
+    company_title: string;
+    company_description: string;
+    company_city: string;
+    company_phone: string;
+    company_links: string[];
+    company_avatar: File | null,
+}
+
+export interface CompanyListItem {
+    company_id: number;
+    company_name: string;
+    company_title: string;
+    company_avatar: string | null;
+}
+
+export interface CompanyList {
+    companies: CompanyListItem[];
+    company_by_id: Company | null;
+}
+
+export interface Company {
+    company_id: number;
+    company_name: string;
+    company_title: string;
+    company_avatar: string;
+    is_visible: boolean;
+    company_description: string;
+    company_city: string;
+    company_phone: string;
+    company_links: string[];
+    company_owner: {
+        user_id: number;
+        user_email: string;
+        user_firstname: string;
+        user_lastname: string;
+        user_avatar: string;
+    };
+}
+
+export type EditCompanyFormProps = {
+    avatarFile: File | null;
+    company: Company | null;
+    name: string;
+    title: string;
+    description: string;
+    city: string;
+    phone: string;
+    links: string[];
+    anonimus: string;
+    handleAvatarClick: () => void;
+    handleNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleTitleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleDescriptionChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleCityChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handlePhoneChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleLinkChange: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void;
+    handleRemoveLink: (index: number) => void;
+    handleAddLink: () => void;
+    handleSaveDataClick: () => void;
+    handleCancelClick: () => void;
 };

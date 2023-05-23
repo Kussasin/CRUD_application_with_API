@@ -1,15 +1,15 @@
 import { useEffect, useState, useRef, } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './UserDetails.module.scss';
-import { RootState, persistor } from '../../Store/CounterStore';
-import { UpdatePasswordData, UpdateUserInfoData, UserData, UserProfile } from '../../Types/Types';
-import { getUserFromList, removeToken, removeUser } from '../../Store/thunks';
-import api from '../../Api/Instance';
+import { RootState, persistor } from '../../../Store/CounterStore';
+import { UpdatePasswordData, UpdateUserInfoData, UserData, UserProfile } from '../../../Types/Types';
+import { getUserFromList, removeToken, removeUser } from '../../../Store/thunks';
+import api from '../../../Api/Instance';
 import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth0 } from '@auth0/auth0-react';
-import { DropdownMenu, EditForm, ChangePassword, Card } from '../../Components/UserDetailComponents/UserDetailsComponents';
+import { DropdownMenu, EditForm, ChangePassword, Card } from '../../../Components/UserDetailComponents/UserDetailsComponents';
 
 const UserDetail = () => {
   const dispatch = useDispatch();
@@ -336,7 +336,6 @@ const UserDetail = () => {
         ) : changePassword ? (
           <ChangePassword
             avatarFile={avatarFile}
-            user={user}
             newPassword={newPassword}
             confirmPassword={confirmPassword}
             anonimus={anonimus}
