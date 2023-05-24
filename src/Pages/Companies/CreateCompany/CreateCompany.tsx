@@ -1,7 +1,6 @@
 import { useState, FormEvent } from 'react';
 import api from '../../../Api/Instance';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import styles from './CreateCompany.module.scss';
 import { useNavigate } from 'react-router-dom';
 
@@ -59,18 +58,6 @@ const CreateCompany = () => {
                     {isSubmitting ? 'Creating...' : 'Create Company'}
                 </button>
             </div>
-            <ToastContainer
-                position="top-center"
-                autoClose={1000}
-                hideProgressBar
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover={false}
-                theme="light"
-            />
         </form>
     );
 };

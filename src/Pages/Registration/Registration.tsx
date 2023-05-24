@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Registration.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../Api/Instance';
 import validateForm from '../../Utils/FormValidation';
@@ -120,19 +120,6 @@ const Registration = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
-
       <Link className={styles.link} to="/authorization">Back to Authorization</Link>
 
     </main>

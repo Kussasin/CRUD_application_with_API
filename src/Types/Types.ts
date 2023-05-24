@@ -20,6 +20,22 @@ export interface User {
     user_password_repeat: string;
 }
 
+export interface Users {
+    [key: string]: string | number;
+    user_id: number;
+    user_firstname: string;
+    user_lastname: string;
+    user_email: string;
+    user_avatar: string;
+}
+
+
+export interface PaginationData {
+    current_page: number;
+    total_page: number;
+    total_results: number;
+}
+
 export interface UserListItem {
     user_id: number;
     user_email: string;
@@ -135,9 +151,9 @@ export type UserData = {
 };
 
 export type DropdownMenuProps = {
-    handleEditClick: () => void;
-    handleChangePasswordClick?: () => void;
-    handleDeleteClick: () => void;
+    id: string;
+    setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+    setChangePassword: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type EditUserFormProps = {
@@ -150,17 +166,11 @@ export type EditUserFormProps = {
     phone: string;
     links: string[];
     anonimus: string;
-    handleAvatarClick: () => void;
-    handleFirstNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleLastNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleStatusChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleCityChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handlePhoneChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleLinkChange: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void;
-    handleRemoveLink: (index: number) => void;
-    handleAddLink: () => void;
-    handleSaveDataClick: () => void;
-    handleCancelClick: () => void;
+    id: string;
+    setUserData: React.Dispatch<React.SetStateAction<UserData>>;
+    setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+    setChangePassword: React.Dispatch<React.SetStateAction<boolean>>;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type ChangePasswordProps = {
@@ -168,30 +178,27 @@ export type ChangePasswordProps = {
     newPassword: string;
     confirmPassword: string;
     anonimus: string;
-    handleNewPasswordChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleConfirmPasswordChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleSavePasswordClick: () => void;
-    handleCancelClick: () => void;
+    user: UserProfile | null;
+    id: string;
+    userData: UserData
+    setUserData: React.Dispatch<React.SetStateAction<UserData>>;
+    setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+    setChangePassword: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export type CardProps = {
-    user?: UserProfile;
-    company?: Company;
+export type UserCardProps = {
+    user: UserProfile;
+    anonimus: string;
+};
+
+export type CompanyCardProps = {
+    company: Company;
     anonimus: string;
 };
 
 export interface CreateCompanyRequest {
     company_name: string;
     is_visible: boolean;
-}
-
-export interface UpdateCompanyInfo {
-    company_name: string;
-    company_title: string;
-    company_description: string;
-    company_city: string;
-    company_phone: string;
-    company_links: string[];
 }
 
 export interface CompanyInfo {
@@ -201,7 +208,7 @@ export interface CompanyInfo {
     company_city: string;
     company_phone: string;
     company_links: string[];
-    company_avatar: File | null,
+    company_avatar?: File | null,
 }
 
 export interface CompanyListItem {
@@ -236,24 +243,17 @@ export interface Company {
 }
 
 export type EditCompanyFormProps = {
-    avatarFile: File | null;
+    avatarFile?: File | null;
     company: Company | null;
     name: string;
     title: string;
     description: string;
     city: string;
     phone: string;
-    links: string[];
+    links: string[]; 
     anonimus: string;
-    handleAvatarClick: () => void;
-    handleNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleTitleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleDescriptionChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleCityChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handlePhoneChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleLinkChange: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void;
-    handleRemoveLink: (index: number) => void;
-    handleAddLink: () => void;
-    handleSaveDataClick: () => void;
-    handleCancelClick: () => void;
+    id: string;
+    setCompanyData: React.Dispatch<React.SetStateAction<CompanyInfo>>;
+    setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };

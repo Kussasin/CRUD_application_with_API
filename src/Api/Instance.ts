@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { CreateCompanyRequest, LoginRequest, LoginResponse, UpdateCompanyInfo, UpdatePasswordData, UpdateUserInfoData, User } from '../Types/Types';
+import { CreateCompanyRequest, LoginRequest, LoginResponse, CompanyInfo, UpdatePasswordData, UpdateUserInfoData, User } from '../Types/Types';
 import { RootState, store } from '../Store/CounterStore';
 
 const instance: AxiosInstance = axios.create({
@@ -95,7 +95,7 @@ const updateCompanyAvatar = (id: string, data: File) => {
     });
 };
 
-const updateCompanyInfo = (id: string, data: UpdateCompanyInfo) => {
+const updateCompanyInfo = (id: string, data: CompanyInfo) => {
     return instance.put(`/company/${id}/update_info/`, data);
 };
 

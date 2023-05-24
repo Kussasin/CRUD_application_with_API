@@ -13,6 +13,8 @@ import UsersList from './Pages/Users/UsersList/UsersList';
 import { Provider } from 'react-redux';
 import { store } from './Store/CounterStore';
 import PrivateRoute from './Utils/ProtectedRoute';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
@@ -36,6 +38,18 @@ const App = () => {
           </Routes>
         </BrowserRouter>
       </Provider>
+      <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover={false}
+                theme="light"
+            />
     </main>
   );
 }
