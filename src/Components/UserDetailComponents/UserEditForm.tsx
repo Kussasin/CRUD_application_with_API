@@ -4,19 +4,13 @@ import { toast } from 'react-toastify';
 import api from '../../Api/Instance';
 import { getUserFromList } from '../../Store/thunks';
 import { useDispatch } from 'react-redux';
+import anonimus from '../Images/anonimus.png'
 
 export const UserEditForm = (props: EditUserFormProps) => {
 
     const {
-        avatarFile,
+        userData,
         user,
-        firstName,
-        lastName,
-        status,
-        city,
-        phone,
-        links,
-        anonimus,
         setUserData,
         setEditMode,
         setChangePassword,
@@ -24,7 +18,6 @@ export const UserEditForm = (props: EditUserFormProps) => {
         setLoading,
     } = props;
     const dispatch = useDispatch();
-
     const handleCancelClick = () => {
         setEditMode(false);
         setChangePassword(false);
@@ -103,17 +96,17 @@ export const UserEditForm = (props: EditUserFormProps) => {
         }
 
         try {
-            if (avatarFile) {
-                await api.updateUserAvatar(id, avatarFile);
+            if (userData.avatarFile) {
+                await api.updateUserAvatar(id, userData.avatarFile);
                 toast.success('Avatar successfully changed');
             } else {
                 const updatedData: UpdateUserInfoData = {
-                    user_firstname: firstName,
-                    user_lastname: lastName,
-                    user_status: status,
-                    user_city: city,
-                    user_phone: phone,
-                    user_links: links,
+                    user_firstname: userData.firstName,
+                    user_lastname: userData.lastName,
+                    user_status: userData.status,
+                    user_city: userData.city,
+                    user_phone: userData.phone,
+                    user_links: userData.links,
                 };
                 await api.updateUserInfo(id, updatedData);
                 toast.success('Data successfully saved');
@@ -125,7 +118,7 @@ export const UserEditForm = (props: EditUserFormProps) => {
                 setEditMode(false);
             }, 1000);
         } catch (error) {
-            if (avatarFile) {
+            if (userData.avatarFile) {
                 toast.error('Error changing avatar');
                 console.log('Error changing avatar:', error);
             } else {
@@ -161,8 +154,8 @@ export const UserEditForm = (props: EditUserFormProps) => {
     return (
         <div className={styles.editForm}>
             <div className={styles.avatarContainer}>
-                <img className={styles.avatar} src={avatarFile ? URL.createObjectURL(avatarFile) : (user?.user_avatar || anonimus)}
-                    alt="User avatar" key={avatarFile?.name}
+                <img className={styles.avatar} src={userData.avatarFile ? URL.createObjectURL(userData.avatarFile) : (user?.user_avatar || anonimus)}
+                    alt="User avatar" key={userData.avatarFile?.name}
                 />
                 <button className={styles.changeAvatar} onClick={handleAvatarClick}>
                     Change Avatar
@@ -171,29 +164,29 @@ export const UserEditForm = (props: EditUserFormProps) => {
             <div className={styles.cardContent}>
                 <div className={styles.formField}>
                     <label htmlFor="firstname">First Name:</label>
-                    <input type="text" defaultValue={firstName} onChange={handleFirstNameChange} />
+                    <input type="text" defaultValue={userData.firstName} onChange={handleFirstNameChange} />
                 </div>
                 <div className={styles.formField}>
                     <label htmlFor="lastname">Last Name:</label>
-                    <input type="text" id="lastname" defaultValue={lastName} onChange={handleLastNameChange} />
+                    <input type="text" id="lastname" defaultValue={userData.lastName} onChange={handleLastNameChange} />
                 </div>
                 <div className={styles.formField}>
                     <label htmlFor="status">Status:</label>
-                    <input type="text" id="status" defaultValue={status} onChange={handleStatusChange} />
+                    <input type="text" id="status" defaultValue={userData.status} onChange={handleStatusChange} />
                 </div>
                 <div className={styles.formField}>
                     <label htmlFor="city">City:</label>
-                    <input type="text" id="city" defaultValue={city} onChange={handleCityChange} />
+                    <input type="text" id="city" defaultValue={userData.city} onChange={handleCityChange} />
                 </div>
                 <div className={styles.formField}>
                     <label htmlFor="phone">Phone number:</label>
-                    <input type="text" id="phone" defaultValue={phone} onChange={handlePhoneChange} />
+                    <input type="text" id="phone" defaultValue={userData.phone} onChange={handlePhoneChange} />
                 </div>
                 <div className={styles.formField}>
                     <label htmlFor="links">Links:</label>
-                    {links.length > 0 && (
+                    {userData.links.length > 0 && (
                         <div>
-                            {links.map((link, index) => (
+                            {userData.links.map((link, index) => (
                                 <div key={index}>
                                     <input
                                         type="text"

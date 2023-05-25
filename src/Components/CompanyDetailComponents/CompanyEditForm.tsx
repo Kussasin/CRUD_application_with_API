@@ -4,19 +4,13 @@ import { toast } from 'react-toastify';
 import api from '../../Api/Instance';
 import { getCompanyFromList } from '../../Store/thunks';
 import { useDispatch } from 'react-redux';
+import anonimus from '../Images/anonimus.png'
 
 export const CompanyEditForm = (props: EditCompanyFormProps) => {
 
     const {
-        avatarFile,
+        companyData,
         company,
-        name,
-        title,
-        description,
-        city,
-        phone,
-        links,
-        anonimus,
         id,
         setEditMode,
         setCompanyData,
@@ -123,17 +117,17 @@ export const CompanyEditForm = (props: EditCompanyFormProps) => {
         }
 
         try {
-            if (avatarFile) {
-                await api.updateCompanyAvatar(id, avatarFile);
+            if (companyData.company_avatar) {
+                await api.updateCompanyAvatar(id, companyData.company_avatar);
                 toast.success('Avatar successfully changed');
             } else {
                 const updatedData: CompanyInfo = {
-                    company_name: name,
-                    company_title: title,
-                    company_description: description,
-                    company_city: city,
-                    company_phone: phone,
-                    company_links: links,
+                    company_name: companyData.company_name,
+                    company_title: companyData.company_title,
+                    company_description: companyData.company_description,
+                    company_city: companyData.company_city,
+                    company_phone: companyData.company_phone,
+                    company_links: companyData.company_links,
                 };
                 await api.updateCompanyInfo(id, updatedData);
                 toast.success('Data successfully saved');
@@ -145,7 +139,7 @@ export const CompanyEditForm = (props: EditCompanyFormProps) => {
                 setEditMode(false);
             }, 1000);
         } catch (error) {
-            if (avatarFile) {
+            if (companyData.company_avatar) {
                 toast.error('Error changing avatar');
                 console.log('Error changing avatar:', error);
             } else {
@@ -158,8 +152,8 @@ export const CompanyEditForm = (props: EditCompanyFormProps) => {
     return (
         <div className={styles.editForm}>
             <div className={styles.avatarContainer}>
-                <img className={styles.avatar} src={avatarFile ? URL.createObjectURL(avatarFile) : (company?.company_avatar || anonimus)}
-                    alt="Company avatar" key={avatarFile?.name}
+                <img className={styles.avatar} src={companyData.company_avatar ? URL.createObjectURL(companyData.company_avatar) : (company?.company_avatar || anonimus)}
+                    alt="Company avatar" key={companyData.company_avatar?.name}
                 />
                 <button className={styles.changeAvatar} onClick={handleAvatarClick}>
                     Change Avatar
@@ -168,25 +162,25 @@ export const CompanyEditForm = (props: EditCompanyFormProps) => {
             <div className={styles.cardContent}>
                 <div className={styles.formField}>
                     <label htmlFor="Name">Name:</label>
-                    <input type="text" defaultValue={name} onChange={handleNameChange} />
+                    <input type="text" defaultValue={companyData.company_name} onChange={handleNameChange} />
                 </div>
                 <div className={styles.formField}>
                     <label htmlFor="Title">Title:</label>
-                    <input type="text" id="lastname" defaultValue={title} onChange={handleTitleChange} />
+                    <input type="text" id="lastname" defaultValue={companyData.company_title} onChange={handleTitleChange} />
                 </div>
                 <div className={styles.formField}>
                     <label htmlFor="city">City:</label>
-                    <input type="text" id="city" defaultValue={city} onChange={handleCityChange} />
+                    <input type="text" id="city" defaultValue={companyData.company_city} onChange={handleCityChange} />
                 </div>
                 <div className={styles.formField}>
                     <label htmlFor="phone">Phone number:</label>
-                    <input type="text" id="phone" defaultValue={phone} onChange={handlePhoneChange} />
+                    <input type="text" id="phone" defaultValue={companyData.company_phone} onChange={handlePhoneChange} />
                 </div>
                 <div className={styles.formField}>
                     <label htmlFor="links">Links:</label>
-                    {links.length > 0 && (
+                    {companyData.company_links.length > 0 && (
                         <div>
-                            {links.map((link, index) => (
+                            {companyData.company_links.map((link, index) => (
                                 <div key={index}>
                                     <input
                                         type="text"
@@ -209,7 +203,7 @@ export const CompanyEditForm = (props: EditCompanyFormProps) => {
                 </div>
                 <div className={styles.formField}>
                     <label htmlFor="description">Description:</label>
-                    <input type="text" id="description" defaultValue={description} onChange={handleDescriptionChange} />
+                    <input type="text" id="description" defaultValue={companyData.company_description} onChange={handleDescriptionChange} />
                 </div>
                 <div className={styles.formActions}>
                     <button className={styles.saveButton} onClick={handleSaveDataClick}>

@@ -11,10 +11,8 @@ import { UserChangePassword } from '../../../Components/UserDetailComponents/Use
 import { UserEditForm } from '../../../Components/UserDetailComponents/UserEditForm';
 import { UserDropdownMenu } from '../../../Components/UserDetailComponents/UserDropdownMenu';
 
-
 const UserDetail = () => {
   const dispatch = useDispatch();
-  const anonimus = 'https://play-lh.googleusercontent.com/EotxkWC4dXajaesh2iVgdIB5-o6pINoas_k-z7nVjRGSu4k9QZwMZIcRNXyUWGn3rg';
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(true);
   const [userExist, setUserExist] = useState(true);
@@ -23,7 +21,6 @@ const UserDetail = () => {
   const [changePassword, setChangePassword] = useState(false);
   const optionsRef = useRef<HTMLDivElement>(null);
   const MyId = useSelector((state: RootState) => state.user.user?.user_id);
-
   useEffect(() => {
     const userId = id as string;
     setLoading(true);
@@ -102,8 +99,6 @@ const UserDetail = () => {
     return <div className={styles.message}>Data not found</div>;
   }
 
-  const { avatarFile, firstName, lastName, status, city, phone, links, newPassword, confirmPassword } = userData;
-
   return (
     <main className={styles.userProfile}>
       <div className={styles.card}>
@@ -124,15 +119,8 @@ const UserDetail = () => {
         )}
         {editMode ? (
           <UserEditForm
-            avatarFile={avatarFile}
+            userData={userData}
             user={user}
-            firstName={firstName}
-            lastName={lastName}
-            status={status}
-            city={city}
-            phone={phone}
-            links={links}
-            anonimus={anonimus}
             setUserData = {setUserData}
             setEditMode = {setEditMode}
             setChangePassword = {setChangePassword}
@@ -141,10 +129,6 @@ const UserDetail = () => {
           />
         ) : changePassword ? (
           <UserChangePassword
-            avatarFile={avatarFile}
-            newPassword={newPassword}
-            confirmPassword={confirmPassword}
-            anonimus={anonimus}
             id={id as string}
             setEditMode={setEditMode}
             setChangePassword={setChangePassword}
@@ -156,7 +140,6 @@ const UserDetail = () => {
         ) : (
           <UserCard
             user={user}
-            anonimus={anonimus}
           />
         )}
       </div>

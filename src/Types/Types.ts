@@ -157,15 +157,8 @@ export type DropdownMenuProps = {
 };
 
 export type EditUserFormProps = {
-    avatarFile: File | null;
     user: UserProfile | null;
-    firstName: string;
-    lastName: string;
-    status: string;
-    city: string;
-    phone: string;
-    links: string[];
-    anonimus: string;
+    userData: UserData;
     id: string;
     setUserData: React.Dispatch<React.SetStateAction<UserData>>;
     setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
@@ -174,10 +167,6 @@ export type EditUserFormProps = {
 };
 
 export type ChangePasswordProps = {
-    avatarFile: File | null;
-    newPassword: string;
-    confirmPassword: string;
-    anonimus: string;
     user: UserProfile | null;
     id: string;
     userData: UserData
@@ -188,12 +177,10 @@ export type ChangePasswordProps = {
 
 export type UserCardProps = {
     user: UserProfile;
-    anonimus: string;
 };
 
 export type CompanyCardProps = {
     company: Company;
-    anonimus: string;
 };
 
 export interface CreateCompanyRequest {
@@ -243,15 +230,8 @@ export interface Company {
 }
 
 export type EditCompanyFormProps = {
-    avatarFile?: File | null;
     company: Company | null;
-    name: string;
-    title: string;
-    description: string;
-    city: string;
-    phone: string;
-    links: string[]; 
-    anonimus: string;
+    companyData: CompanyInfo
     id: string;
     setCompanyData: React.Dispatch<React.SetStateAction<CompanyInfo>>;
     setEditMode: React.Dispatch<React.SetStateAction<boolean>>;

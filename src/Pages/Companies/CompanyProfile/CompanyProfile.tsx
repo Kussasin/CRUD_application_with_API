@@ -12,7 +12,6 @@ import { CompanyEditForm } from '../../../Components/CompanyDetailComponents/Com
 
 const CompanyProfile = () => {
   const dispatch = useDispatch();
-  const anonimus = 'https://play-lh.googleusercontent.com/EotxkWC4dXajaesh2iVgdIB5-o6pINoas_k-z7nVjRGSu4k9QZwMZIcRNXyUWGn3rg';
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(true);
   const [companyExist, setCompanyExist] = useState(true);
@@ -99,8 +98,6 @@ const CompanyProfile = () => {
     return <div className={styles.message}>Data not found</div>;
   }
 
-  const { company_avatar, company_city, company_description, company_links, company_name, company_phone, company_title } = companyData;
-
   return (
     <main className={styles.userProfile}>
       <div className={styles.card}>
@@ -120,15 +117,8 @@ const CompanyProfile = () => {
         )}
         {editMode ? (
           <CompanyEditForm
-            avatarFile={company_avatar}
+            companyData={companyData}
             company={company}
-            name={company_name}
-            title={company_title}
-            description={company_description}
-            city={company_city}
-            phone={company_phone}
-            links={company_links}
-            anonimus={anonimus}
             setCompanyData={setCompanyData}
             setLoading={setLoading}
             id={id as string}
@@ -137,7 +127,6 @@ const CompanyProfile = () => {
         ) : (
           <CompanyCard
             company={company}
-            anonimus={anonimus}
           />
         )}
       </div>

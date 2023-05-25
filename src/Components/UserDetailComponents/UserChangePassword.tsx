@@ -2,14 +2,11 @@ import { ChangePasswordProps, UpdatePasswordData } from '../../Types/Types';
 import styles from '../../Pages/Users/UserDetails/UserDetails.module.scss';
 import { toast } from 'react-toastify';
 import api from '../../Api/Instance';
+import anonimus from '../Images/anonimus.png'
 
 export const UserChangePassword = (props: ChangePasswordProps) => {
 
   const {
-    avatarFile,
-    newPassword,
-    confirmPassword,
-    anonimus,
     user,
     id,
     userData,
@@ -66,12 +63,10 @@ export const UserChangePassword = (props: ChangePasswordProps) => {
       return;
     }
 
-    const { newPassword, confirmPassword } = userData;
-
-    if (newPassword === confirmPassword) {
+    if (userData.newPassword === userData.confirmPassword) {
       const data: UpdatePasswordData = {
-        user_password: newPassword,
-        user_password_repeat: confirmPassword,
+        user_password: userData.newPassword,
+        user_password_repeat: userData.confirmPassword,
       };
 
       try {
@@ -92,16 +87,16 @@ export const UserChangePassword = (props: ChangePasswordProps) => {
   return (
     <div className={styles.editForm}>
       <div className={styles.avatarContainer}>
-        <img className={styles.avatar} src={avatarFile ? URL.createObjectURL(avatarFile) : (user?.user_avatar || anonimus)} alt="User avatar" />
+        <img className={styles.avatar} src={userData.avatarFile ? URL.createObjectURL(userData.avatarFile) : (user?.user_avatar || anonimus)} alt="User avatar" />
       </div>
       <div className={styles.cardContent}>
         <div className={styles.formField}>
           <label htmlFor="newPassword">New Password:</label>
-          <input type="password" id="newPassword" value={newPassword} onChange={handleNewPasswordChange} />
+          <input type="password" id="newPassword" value={userData.newPassword} onChange={handleNewPasswordChange} />
         </div>
         <div className={styles.formField}>
           <label htmlFor="confirmPassword">Confirm Password:</label>
-          <input type="password" id="confirmPassword" value={confirmPassword} onChange={handleConfirmPasswordChange} />
+          <input type="password" id="confirmPassword" value={userData.confirmPassword} onChange={handleConfirmPasswordChange} />
         </div>
         <div className={styles.formActions}>
           <button className={styles.saveButton} onClick={handleSavePasswordClick}>
