@@ -10,8 +10,8 @@
 
 .modal_header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: flex-end;
+    align-items: center;
     margin-bottom: 20px;
 }
 
@@ -25,6 +25,9 @@
 
 .modal_body {
     line-height: 1.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .modal_wrapper {

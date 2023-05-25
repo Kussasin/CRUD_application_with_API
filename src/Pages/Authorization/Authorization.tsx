@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Authorization.module.scss';
 import api from '../../Api/Instance';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import validateForm from '../../Utils/FormValidation';
 import { FormValues, FormErrors, Token, UserProfile } from '../../Types/Types';
@@ -132,7 +132,6 @@ const Authorization = () => {
       <div className={styles.signupLink}>
         Don't have an account? <Link to="/registration">Sign up</Link>
       </div>
-      <ToastContainer />
     </main>
   );
 };

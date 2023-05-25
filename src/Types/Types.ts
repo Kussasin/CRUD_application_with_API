@@ -20,6 +20,22 @@ export interface User {
     user_password_repeat: string;
 }
 
+export interface Users {
+    [key: string]: string | number;
+    user_id: number;
+    user_firstname: string;
+    user_lastname: string;
+    user_email: string;
+    user_avatar: string;
+}
+
+
+export interface PaginationData {
+    current_page: number;
+    total_page: number;
+    total_results: number;
+}
+
 export interface UserListItem {
     user_id: number;
     user_email: string;
@@ -95,11 +111,6 @@ export interface IState {
     counter: number;
 }
 
-export interface ModalContent {
-    header: string;
-    content: string;
-}
-
 export interface TokenState {
     token: Token | null;
 }
@@ -140,47 +151,89 @@ export type UserData = {
 };
 
 export type DropdownMenuProps = {
-    handleEditClick: () => void;
-    handleChangePasswordClick: () => void;
-    handleDeleteClick: () => void;
+    id: string;
+    setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+    setChangePassword: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export type EditFormProps = {
-    avatarFile: File | null;
+export type EditUserFormProps = {
     user: UserProfile | null;
-    firstName: string;
-    lastName: string;
-    status: string;
-    city: string;
-    phone: string;
-    links: string[];
-    anonimus: string;
-    handleAvatarClick: () => void;
-    handleFirstNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleLastNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleStatusChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleCityChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handlePhoneChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleLinkChange: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void;
-    handleRemoveLink: (index: number) => void;
-    handleAddLink: () => void;
-    handleSaveDataClick: () => void;
-    handleCancelClick: () => void;
+    userData: UserData;
+    id: string;
+    setUserData: React.Dispatch<React.SetStateAction<UserData>>;
+    setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+    setChangePassword: React.Dispatch<React.SetStateAction<boolean>>;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type ChangePasswordProps = {
-    avatarFile: File | null;
     user: UserProfile | null;
-    newPassword: string;
-    confirmPassword: string;
-    anonimus: string;
-    handleNewPasswordChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleConfirmPasswordChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleSavePasswordClick: () => void;
-    handleCancelClick: () => void;
+    id: string;
+    userData: UserData
+    setUserData: React.Dispatch<React.SetStateAction<UserData>>;
+    setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+    setChangePassword: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export type CardProps = {
+export type UserCardProps = {
     user: UserProfile;
-    anonimus: string;
+};
+
+export type CompanyCardProps = {
+    company: Company;
+};
+
+export interface CreateCompanyRequest {
+    company_name: string;
+    is_visible: boolean;
+}
+
+export interface CompanyInfo {
+    company_name: string;
+    company_title: string;
+    company_description: string;
+    company_city: string;
+    company_phone: string;
+    company_links: string[];
+    company_avatar?: File | null,
+}
+
+export interface CompanyListItem {
+    company_id: number;
+    company_name: string;
+    company_title: string;
+    company_avatar: string | null;
+}
+
+export interface CompanyList {
+    companies: CompanyListItem[];
+    company_by_id: Company | null;
+}
+
+export interface Company {
+    company_id: number;
+    company_name: string;
+    company_title: string;
+    company_avatar: string;
+    is_visible: boolean;
+    company_description: string;
+    company_city: string;
+    company_phone: string;
+    company_links: string[];
+    company_owner: {
+        user_id: number;
+        user_email: string;
+        user_firstname: string;
+        user_lastname: string;
+        user_avatar: string;
+    };
+}
+
+export type EditCompanyFormProps = {
+    company: Company | null;
+    companyData: CompanyInfo
+    id: string;
+    setCompanyData: React.Dispatch<React.SetStateAction<CompanyInfo>>;
+    setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };

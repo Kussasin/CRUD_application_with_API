@@ -6,6 +6,7 @@ import userReducer from './userReducer';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userListReducer from './usersListReducer';
+import companiesListReducer from './companiesListReducer';
 
 const initialState = { counter: 0 };
 
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
     counter: counterReducer,
     token: tokenReducer,
     user: userReducer,
-    users: userListReducer
+    users: userListReducer,
+    companies: companiesListReducer,
 });
 
 const persistConfig = {
